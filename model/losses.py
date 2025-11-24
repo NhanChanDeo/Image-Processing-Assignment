@@ -1,14 +1,15 @@
 import torch
 import torch.nn as nn
 
-class MultiTaskLoss:
+class MultiTaskLoss(nn.Module):
     def __init__(self, alpha=1.0, beta=0.2):
+        super().__init__()
         self.alpha = alpha
         self.beta = beta
         self.mae = nn.L1Loss()
         self.bce = nn.BCEWithLogitsLoss()
 
-    def __call__(self, age_pred, age_target, gender_logit, gender_target):
+    def forward(self, age_pred, age_target, gender_logit, gender_target):
         loss_age = self.mae(age_pred, age_target)
         loss_gender = self.bce(gender_logit, gender_target)
 

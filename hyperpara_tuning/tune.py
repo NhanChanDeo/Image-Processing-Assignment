@@ -1,11 +1,18 @@
 """Hyperparameter tuning using Optuna for Age-Gender prediction model."""
+import sys
+from pathlib import Path
+
+# Handle imports from parent directory when run directly
+current_dir = Path(__file__).parent
+parent_dir = current_dir.parent
+if str(parent_dir) not in sys.path:
+    sys.path.insert(0, str(parent_dir))
 
 import optuna
 from optuna.trial import Trial
 import torch
 import torch.nn as nn
 import torch.optim as optim
-from pathlib import Path
 import json
 
 from model.model import AgeGenderModel
@@ -49,9 +56,15 @@ class HyperparameterTuner:
         
         # Load data once
         self.train_loader, self.val_loader, self.test_loader = build_loaders(
-            data_dir=data_dir,
+            train_csv=f"{data_dir}/train/label.csv",
+            train_img=f"{data_dir}/train/img",
+            val_csv=f"{data_dir}/valid/label.csv",
+            val_img=f"{data_dir}/valid/img",
+            test_csv=f"{data_dir}/test/label.csv",
+            test_img=f"{data_dir}/test/img",
             batch_size=batch_size,
             num_workers=num_workers,
+            use_weighted_sampler=True,
         )
         
         # Create tuning directory

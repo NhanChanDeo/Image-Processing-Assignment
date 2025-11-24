@@ -1,5 +1,20 @@
-UTKFace
-labeled/full
-venv/
+# Python
 __pycache__/
 *.pyc
+*.pyo
+*.pyd
+.Python
+env/
+venv/
+.env
+.vscode/
+*.log
+
+# Project Data (assuming you don't want to upload the dataset)
+labeled/
+data/
+
+# Checkpoints and Tuning Results
+checkpoints/
+tuning_results/
+*.pth
